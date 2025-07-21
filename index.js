@@ -24,8 +24,12 @@ function tie(){
 //******************* */
 const cont=document.getElementById('container');
 let ch='O';
+const player0=document.getElementById('player0');
+const playerx=document.getElementById('playerx');
 function restart(event){
           if(ch==='O'){
+            player0.style.transform="scale(0.8)";
+            playerx.style.transform="scale(1.2)";
             const ele=document.getElementById(event.target.id);
             let id=Number(event.target.id);
             if(arr[id]===0) {
@@ -33,16 +37,22 @@ function restart(event){
                ch='X';
                arr[id]='O';
                if(winner()) {
+                 player0.style.transform="scale(1.2)";
+                  playerx.style.transform="scale(0.8)";
                 wn.innerHTML=`Winner Is O`;
                 cont.removeEventListener('click',restart);
                }
                if(tie() && wn.innerHTML==""){
+                 player0.style.transform="scale(1)";
+                  playerx.style.transform="scale(1)";
                   wn.innerHTML="Match is Tie";
                   cont.removeEventListener('click',restart);
                }
             }
         }
         else{
+            player0.style.transform="scale(1.2)";
+            playerx.style.transform="scale(0.8)";
             const ele=document.getElementById(event.target.id);
             let id=Number(event.target.id);
             if(arr[id]===0){
@@ -50,10 +60,14 @@ function restart(event){
                ch='O';
                arr[id]='X';
                if(winner()) {
+                 player0.style.transform="scale(0.8)";
+                  playerx.style.transform="scale(1.2)";
                 wn.innerHTML=`Winner Is X`;
                 cont.removeEventListener('click',restart);
                }
                 if(tie() && wn.innerHTML==""){
+                player0.style.transform="scale(1)";
+                  playerx.style.transform="scale(1)";
                   wn.innerHTML="Match is Tie";
                   cont.removeEventListener('click',restart);
                }

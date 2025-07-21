@@ -6,14 +6,14 @@
 body{
     height: 100vh;
     width: 100vw;
-    background-color: rgb(186, 143, 227);
+    background-color:white;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 #box{
-    background-color:white;
+    background-color:rgba(29, 53, 139, 0.833);
     color: black;
     padding: 1.3rem;
     border-radius: 0.8rem;
@@ -21,6 +21,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: white;
 }
 h2{
     text-align: center;
@@ -36,11 +37,13 @@ h2{
     gap: 0.8rem;
     background: white;
      grid-template-rows: 8vw 8vw 8vw; 
+     border-radius: 1rem;
 }
 
 .cell{
     border: 3px rgb(197, 186, 186) solid;
     border-radius: 10px;
+    color: black;
 }
 
 button{
@@ -83,4 +86,16 @@ button{
     align-items: center;
     font-size: xx-large;
     cursor: pointer;
+}
+
+img{
+    height: 40vh;
+    width: 15vw;
+    background-color: white;
+
+}
+
+.player>h2{
+    position: fixed;
+    top: 10vh;
 }
