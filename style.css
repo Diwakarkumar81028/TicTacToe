@@ -1,0 +1,86 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    height: 100vh;
+    width: 100vw;
+    background-color: rgb(186, 143, 227);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#box{
+    background-color:white;
+    color: black;
+    padding: 1.3rem;
+    border-radius: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+h2{
+    text-align: center;
+    font-weight:900;
+    font-size: xx-large;
+}
+
+#container{
+    margin-top: 1.5rem;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 8vw 8vw 8vw; 
+    gap: 0.8rem;
+    background: white;
+     grid-template-rows: 8vw 8vw 8vw; 
+}
+
+.cell{
+    border: 3px rgb(197, 186, 186) solid;
+    border-radius: 10px;
+}
+
+button{
+    align-self: center;
+    font-size: 1.1em;
+    margin-top: 1rem;
+    background-color: green;
+    color: white;
+    border: 0;
+    padding: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.player{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    width: 40vw;
+}
+
+.player>h2{
+   background-color: green;
+   color: white;
+   border-radius: 8px;
+   font-size: larger;
+   padding-left: 1rem;
+   padding-right:1rem;
+   padding-top: 5px;
+   padding-bottom: 5px;
+}
+
+.cell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+    cursor: pointer;
+}
