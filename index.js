@@ -1,90 +1,95 @@
-const win=[
-    [0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]
-];
-let arr=[0,0,0,0,0,0,0,0,0];  
+const arr=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[6,4,2]];
+const nums=["E","E","E","E","E","E","E","E","E"];
 function winner(){
-    for(let i=0;i<8;i++){
-        let id1=win[i][0],id2=win[i][1],id3=win[i][2];
-        if(arr[id1]==arr[id2] && arr[id1]!=0){
-            if(arr[id1]==arr[id3]) return true;
-        }
+  for(let i=0;i<8;i++){
+    let idx1=arr[i][0],idx2=arr[i][1],idx3=arr[i][2];
+    //cond;
+    if(nums[idx1]===nums[idx2] && nums[idx1]!="E"){
+        if(nums[idx1]===nums[idx3]) return true;
     }
-    return false;
+  }
+  return false;
 }
-const wn=document.getElementById('win');
-////////////////
+//
 function tie(){
     let c=0;
     for(let i=0;i<9;i++){
-        if(arr[i]==0) c++;
+        if(nums[i]=="E") c++;
     }
-    if(c==0) return true;
-    return false;
+    if(c>0) return false;
+    else return true;
 }
-//******************* */
+//
+const img1=document.getElementById('player0');
+const img2=document.getElementById("playerx");
+const win=document.getElementById('win');
 const cont=document.getElementById('container');
-let ch='O';
-const player0=document.getElementById('player0');
-const playerx=document.getElementById('playerx');
-function restart(event){
-          if(ch==='O'){
-            player0.style.transform="scale(0.8)";
-            playerx.style.transform="scale(1.2)";
-            const ele=document.getElementById(event.target.id);
-            let id=Number(event.target.id);
-            if(arr[id]===0) {
-               ele.innerHTML="O";
-               ch='X';
-               arr[id]='O';
-               if(winner()) {
-                 player0.style.transform="scale(1.2)";
-                  playerx.style.transform="scale(0.8)";
-                wn.innerHTML=`Winner Is O`;
-                cont.removeEventListener('click',restart);
-               }
-               if(tie() && wn.innerHTML==""){
-                 player0.style.transform="scale(1)";
-                  playerx.style.transform="scale(1)";
-                  wn.innerHTML="Match is Tie";
-                  cont.removeEventListener('click',restart);
-               }
+//
+function helper(event){
+     if(event.target.className=="cell"){
+        img1.style.transform="scale(1.2)";
+        img2.style.transform="scale(0.8)";
+        //human
+        const id=Number(event.target.id);
+        if(nums[id]==="E"){
+            nums[id]="O";
+            const ele1=document.getElementById(`${id}`);
+            ele1.innerHTML="O";
+            if(winner()) {win.innerHTML="You Won";cont.removeEventListener('click',helper);}
+            if(tie() && win.innerHTML=="") {win.innerHTML="Match Tie";
+                cont.removeEventListener('click',helper);
+                img1.style.transform="scale(1)";
+                img2.style.transform="scale(1)";
+            }
+            cont.removeEventListener('click',helper);
+        }
+        //anonyms;
+        setTimeout(()=>{
+            if(win.innerHTML==""){
+            let idx=-1;
+            img1.style.transform="scale(0.8)";
+            img2.style.transform="scale(1.2)";
+            while(true){
+                idx=(Math.floor(Math.random()*41))%9;
+                if(nums[idx]=="E") break;
+            }
+            const ele2=document.getElementById(`${idx}`);
+            ele2.innerHTML="X";
+            nums[idx]="X";
+            cont.addEventListener('click',helper);
+            if(winner()) {win.innerHTML="You Lose"; cont.removeEventListener('click',helper);}
+            if(tie() && win.innerHTML=="") {
+                win.innerHTML="Match Tie";
+                cont.removeEventListener('click',helper);
+                img1.style.transform="scale(1)";
+                img2.style.transform="scale(1)";
             }
         }
-        else{
-            player0.style.transform="scale(1.2)";
-            playerx.style.transform="scale(0.8)";
-            const ele=document.getElementById(event.target.id);
-            let id=Number(event.target.id);
-            if(arr[id]===0){
-               ele.innerHTML="X";
-               ch='O';
-               arr[id]='X';
-               if(winner()) {
-                 player0.style.transform="scale(0.8)";
-                  playerx.style.transform="scale(1.2)";
-                wn.innerHTML=`Winner Is X`;
-                cont.removeEventListener('click',restart);
-               }
-                if(tie() && wn.innerHTML==""){
-                player0.style.transform="scale(1)";
-                  playerx.style.transform="scale(1)";
-                  wn.innerHTML="Match is Tie";
-                  cont.removeEventListener('click',restart);
-               }
-            } 
-        }
+        },2000)
+     }
 }
-//*********************** */
-const start=document.getElementById('start');
-start.addEventListener('click',(event)=>{
-    //restart;
-    for(let i=0;i<=8;i++){
-        arr[i]=0;
+
+//
+cont.addEventListener('click',helper);
+
+const restart=document.getElementById('start');
+restart.addEventListener('click',(event)=>{
+    //end game;
+    cont.removeEventListener('click',helper);
+    //empty nums;
+    for(let i=0;i<9;i++){
+        nums[i]="E";
     }
-    let boxes=document.querySelectorAll('.cell');
-    boxes=Array.from(boxes);
-    boxes.forEach(box=>box.innerHTML="");
-    wn.innerHTML="";
-    //
-    cont.addEventListener('click',restart);
-});
+    let eles=document.querySelectorAll(".cell");
+     eles=Array.from(eles);
+     eles.forEach((ele)=>{
+        ele.innerHTML="";
+     })
+    
+    //img
+    img1.style.transform="scale(1)";
+    img2.style.transform="scale(1)";
+    win.innerHTML="";
+    //start game;
+    cont.addEventListener('click',helper);
+})
